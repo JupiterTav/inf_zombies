@@ -64,43 +64,31 @@ void draw_grid(struct Grid *grid) {
 }
 
 void manage_selected_grid(struct Grid *grid){
-  static int current_line = 0;
+ 
+ Slice *last_block = &grid->map[GRID_LINES - 1][GRID_COLUMS - 1];
+
   if(IsKeyPressed(KEY_RIGHT)){
-    if(grid->selected_block != &(grid->map[GRID_LINES - 1][GRID_COLUMS - 1]))
-        grid->selected_block++;
-    else 
-        grid->selected_block = &(grid->map[0][0]);
-  }
+    grid->selected_block = (grid->selected_block != (last_block))
+      ? grid->selected_block + 1 : &(grid->map[0][0]);
+    }
 
   else if(IsKeyPressed(KEY_LEFT)){
-    if(grid->selected_block != &(grid->map[0][0]))
-        grid->selected_block--;
-    else
-        grid->selected_block = &(grid->map[GRID_LINES - 1][GRID_COLUMS - 1]);
+    grid->selected_block = (grid->selected_block != &(grid->map[0][0])) 
+      ? grid->selected_block - 1 : last_block;
   }
   
-  else if(IsKeyPressed(KEY_DOWN)){
-    if(current_line < 4){
-      grid->selected_block += 9;
-      current_line++;
-    }
-    else { 
-      grid->selected_block -= (36 /  current_line);
-      current_line = 0;
-    }
+  else if(IsKeyPressed(KEY_DOWN)){      
+    grid->selected_block += ( grid->selected_block >= &(grid->map[GRID_LINES - 1][0]) && 
+                              grid->selected_block <= (last_block)) 
+      ? -36 : 9;
   }
-  else if(IsKeyPressed(KEY_UP)){    
-    if(current_line > 0){
-      grid->selected_block -= 9;
-      current_line--;
-    }
-    else{
-      grid->selected_block += 36;
-      current_line = 4;
-    }
+  else if(IsKeyPressed(KEY_UP)){
+    grid->selected_block += ( grid->selected_block >= &(grid->map[0][0]) && 
+                              grid->selected_block<=&(grid->map[0][GRID_COLUMS-1])) 
+      ? 36 : -9;
   }
-}
 
+}
 void draw_outlined_selected_grid(struct Grid *grid){
   DrawRectangleLinesEx((grid->selected_block->tile), 5, BLACK);
 }
