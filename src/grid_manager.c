@@ -13,6 +13,7 @@ void initialize_grid(struct Grid *grid, float x, float y, float width, float hei
         grid->map[i][j].tile.y = y + (92*i);
         grid->map[i][j].tile.width  = width ;
         grid->map[i][j].tile.height = height;
+        grid->map[i][j].theres_plant = -1;
       }
     }
 
@@ -58,7 +59,7 @@ void manage_selected_grid(struct Grid *grid){
 }
 
 void draw_outlined_selected_grid(struct Grid *grid){
-  DrawRectangleLinesEx((grid->selected_block->tile), 5, BLACK);
+  DrawRectangleLinesEx((grid->selected_block->tile), 4, BLACK);
 }
 
 

@@ -2,10 +2,6 @@
 #include <raymath.h>
 #include "grid_manager.h"
 
-#define GRID_COLUMS 9
-#define GRID_LINES 5
-#define GRID_START 20
-
 int main() {
 
   struct Grid game_grid;
@@ -20,6 +16,16 @@ int main() {
     ClearBackground(SKYBLUE); 
     draw_grid(&game_grid);
     draw_outlined_selected_grid(&game_grid);
+    if(IsKeyDown(KEY_J) && game_grid.selected_block->theres_plant == -1){
+      game_grid.selected_block->theres_plant = 1;
+    }
+
+    for(int i = 0; i < GRID_LINES ; i++){
+      for(int j = 0; j < GRID_COLUMS; j++){
+          if(game_grid.map[i][j].theres_plant == 1)
+            DrawCircle(game_grid.map[i][j].tile.x+36, game_grid.map[i][j].tile.y+46, 20, PURPLE);
+      }
+    }
     EndDrawing();
   }
   
