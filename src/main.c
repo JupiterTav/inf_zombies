@@ -1,8 +1,13 @@
 #include <raylib.h>
 #include <raymath.h>
+#include <stdio.h>
 #include "grid_manager.h"
+#include "plant_manager.h"
 
 int main() {
+
+  SetTargetFPS(60);
+  start_plants();
 
   struct Grid game_grid;
   initialize_grid(&game_grid, 30, 40, 72, 92);
@@ -16,16 +21,16 @@ int main() {
     ClearBackground(SKYBLUE); 
     draw_grid(&game_grid);
     draw_outlined_selected_grid(&game_grid);
-    if(IsKeyDown(KEY_J) && game_grid.selected_block->theres_plant == -1){
+    
+    if(IsKeyPressed(KEY_J) && game_grid.selected_block->theres_plant == -1){
       game_grid.selected_block->theres_plant = 1;
+      make_plant(game_grid, PEATER);
     }
-
-    for(int i = 0; i < GRID_LINES ; i++){
-      for(int j = 0; j < GRID_COLUMS; j++){
-          if(game_grid.map[i][j].theres_plant == 1)
-            DrawCircle(game_grid.map[i][j].tile.x+36, game_grid.map[i][j].tile.y+46, 20, PURPLE);
-      }
+    else if(IsKeyPressed(KEY_K) && game_grid.selected_block->theres_plant == -1){
+      game_grid.selected_block->theres_plant = 1;
+      make_plant(game_grid, SUNFLOWER);
     }
+    render_plants();
     EndDrawing();
   }
   
@@ -33,4 +38,3 @@ int main() {
 
   return 0;
 }
-
