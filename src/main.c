@@ -3,18 +3,22 @@
 #include <stdio.h>
 #include "grid_manager.h"
 #include "plant_manager.h"
+#include "sun_points_manager.h"
 
 int main() {
 
   SetTargetFPS(60);
+  int frame_counter = 0;
   start_plants();
 
   struct Grid game_grid;
   initialize_grid(&game_grid, 30, 40, 72, 92);
+  start_sun_points();
   
   InitWindow(978, 640, "Inf_zombies");
 
   while(!WindowShouldClose()){ 
+    frame_counter++;
     manage_selected_grid(&game_grid);
 
     BeginDrawing();
@@ -30,7 +34,13 @@ int main() {
     }
     on_collision();
     render_plants();
-    EndDrawing();
+    spawn_sun();
+    collect_sun();
+    if(can_sun_spawn(frame_counter)){
+      create_sun();
+     printf("%d\n", frame_counter);
+    }
+    EndDrawing(); 
   }
   
   CloseWindow();
