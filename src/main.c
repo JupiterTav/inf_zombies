@@ -22,14 +22,13 @@ int main() {
     draw_grid(&game_grid);
     draw_outlined_selected_grid(&game_grid);
     
-    if(IsKeyPressed(KEY_J) && game_grid.selected_block->theres_plant == -1){
-      game_grid.selected_block->theres_plant = 1;
-      make_plant(game_grid, PEATER);
+    if(IsKeyPressed(KEY_J) && !game_grid.selected_block->theres_plant){
+      make_plant(game_grid.selected_block, PEATER);
     }
-    else if(IsKeyPressed(KEY_K) && game_grid.selected_block->theres_plant == -1){
-      game_grid.selected_block->theres_plant = 1;
-      make_plant(game_grid, SUNFLOWER);
+    else if(IsKeyPressed(KEY_K) && !game_grid.selected_block->theres_plant){
+      make_plant(game_grid.selected_block, SUNFLOWER);
     }
+    on_collision();
     render_plants();
     EndDrawing();
   }

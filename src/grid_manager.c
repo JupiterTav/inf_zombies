@@ -13,7 +13,7 @@ void initialize_grid(struct Grid *grid, float x, float y, float width, float hei
         grid->map[i][j].tile.y = y + (92*i);
         grid->map[i][j].tile.width  = width ;
         grid->map[i][j].tile.height = height;
-        grid->map[i][j].theres_plant = -1;
+        grid->map[i][j].theres_plant = 0;
       }
     }
 
@@ -33,7 +33,7 @@ void draw_grid(struct Grid *grid) {
 
 void manage_selected_grid(struct Grid *grid){
  
- Slice *last_block = &grid->map[GRID_LINES - 1][GRID_COLUMS - 1];
+  Block *last_block = &grid->map[GRID_LINES - 1][GRID_COLUMS - 1];
 
   if(IsKeyPressed(KEY_RIGHT)){
     grid->selected_block = (grid->selected_block != (last_block))
@@ -61,5 +61,3 @@ void manage_selected_grid(struct Grid *grid){
 void draw_outlined_selected_grid(struct Grid *grid){
   DrawRectangleLinesEx((grid->selected_block->tile), 4, BLACK);
 }
-
-

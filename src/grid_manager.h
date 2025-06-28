@@ -7,14 +7,14 @@
 #define GRID_START 20
 
 
-typedef struct Block {
+typedef struct{
   int theres_plant;
   Rectangle tile;
-}Slice;
+}Block;
 
 struct Grid{
-  Slice map[GRID_LINES][GRID_COLUMS];
-  Slice *selected_block;
+  Block map[GRID_LINES][GRID_COLUMS];
+  Block *selected_block;
 };
 
 
