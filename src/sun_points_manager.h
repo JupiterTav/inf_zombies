@@ -18,5 +18,8 @@ void create_sun();
 void spawn_sun(int frames);
 void sun_animated(int frames, Vector2 pos);
 void collect_sun();
+void points_menu();
+void decrease_points(int point);
+int get_points();
 
 #endif // !DEBUG

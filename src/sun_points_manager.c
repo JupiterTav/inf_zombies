@@ -11,16 +11,21 @@ Texture2D sun_texture;
 float framesWidth;
 float framesHeight;
 
+Texture2D sun_menu_texture;
+
+static int points = 0;
+
+int Points;
 void start_sun_points(){
   if(IsTextureValid(LoadTexture("assets/sprites/sun.png"))){
     sun_texture = LoadTexture("assets/sprites/sun.png");
     framesWidth = (float)(sun_texture.width/FRAMES_PER_LINE);
     framesHeight = (float)(sun_texture.height/LINES);
   }
-  else {
-    printf("ERRO NA LEITURA DA TEXTURA");
-  }
 
+  if(IsTextureValid(LoadTexture("assets/sprites/sun_menu.png"))){
+    sun_menu_texture = LoadTexture("assets/sprites/sun_menu.png");
+  }
   for(int i = 0; i < 10; i++){
       suns_spawned[i].collected = 1;
   }
@@ -60,7 +65,6 @@ void create_sun(){
 }
 
 void spawn_sun(int frames){
-
   for(int i = 0; i < 10; i++){
     if(suns_spawned[i].collected == 0){
       sun_animated(frames, suns_spawned[i].position);
@@ -80,6 +84,7 @@ void collect_sun(){
     for(int i = 0; i < 10; i++){
       if(suns_spawned[i].collected == 0){
         suns_spawned[i].collected = 1;
+        points += 25;
         spawned_suns--;
       }
     }
@@ -87,8 +92,21 @@ void collect_sun(){
     for(int i = 0; i < 10; i++){
       if(suns_spawned[i].collected == 0 && CheckCollisionPointRec(GetMousePosition(), suns_spawned[i].hitbox)){
         suns_spawned[i].collected = 1;
+        points += 25;
         spawned_suns--;
       }
     }
   }
+}
+void points_menu(){
+  DrawTextureEx(sun_menu_texture, (Vector2){30, 585}, 0, 0.25, WHITE);
+  Rectangle points_back = { 25, 645, 80, 25};
+  DrawRectangleRounded(points_back, 0.2, 1, (Color){245, 233, 120, 255});
+  DrawText(TextFormat("%d", points), 54, 652, 15, BLACK);
+}
+void decrease_points(int point){
+  points -= point;
+}
+int get_points(){
+  return points;
 }
