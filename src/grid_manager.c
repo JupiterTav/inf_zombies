@@ -9,8 +9,8 @@
 void initialize_grid(struct Grid *grid, float x, float y, float width, float height){
     for(int i = 0; i < GRID_LINES; i++) {
       for(int j = 0; j < GRID_COLUMS; j++){
-        grid->map[i][j].tile.x = x + (72 * j);
-        grid->map[i][j].tile.y = y + (92*i);
+        grid->map[i][j].tile.x = x + (width * j);
+        grid->map[i][j].tile.y = y + (height*i);
         grid->map[i][j].tile.width  = width ;
         grid->map[i][j].tile.height = height;
         grid->map[i][j].theres_plant = 0;
