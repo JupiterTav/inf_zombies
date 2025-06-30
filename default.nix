@@ -12,8 +12,9 @@ pkgs.stdenv.mkDerivation {
     gcc -c grid_manager.c
     gcc -c plant_manager.c
     gcc -c sun_points_manager.c
+    gcc -c peashooter.c
     gcc -c main.c 
-    gcc main.o grid_manager.o plant_manager.o sun_points_manager.o -o inf_zombies -lraylib
+    gcc main.o grid_manager.o plant_manager.o sun_points_manager.o peashooter.o -o inf_zombies -lraylib
     '';
   installPhase = ''
     mkdir -p $out/bin 
