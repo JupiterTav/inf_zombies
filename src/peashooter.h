@@ -16,7 +16,7 @@ typedef struct{
   int activated;
 }PEA; 
 
-void shoot(PLANT peashooter_plant);
+void shoot_pea(PLANT peashooter_plant);
 
 void update_pea(int frames);
 

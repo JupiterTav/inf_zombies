@@ -3,8 +3,8 @@
 #include "stdlib.h"
 #include "time.h"
 #include <stdio.h>
-
-SUN suns_spawned[10];
+#define MAX_SUNS 5
+SUN suns_spawned[MAX_SUNS];
 int spawned_suns = 0;
 
 Texture2D sun_texture;
@@ -14,7 +14,6 @@ float framesHeight;
 Texture2D sun_menu_texture;
 
 static int points = 0;
-
 int Points;
 void start_sun_points(){
   if(IsTextureValid(LoadTexture("assets/sprites/sun.png"))){
@@ -26,36 +25,40 @@ void start_sun_points(){
   if(IsTextureValid(LoadTexture("assets/sprites/sun_menu.png"))){
     sun_menu_texture = LoadTexture("assets/sprites/sun_menu.png");
   }
-  for(int i = 0; i < 10; i++){
+  for(int i = 0; i < MAX_SUNS; i++){
       suns_spawned[i].collected = 1;
   }
 }
 int can_sun_spawn(int frames){
   int can_spawn = 0;
-  if(frames % (SPAWNTIME*60) == 0 && spawned_suns <= 10){
+  if(frames % (SPAWNTIME*60) == 0 && spawned_suns <= MAX_SUNS){
     can_spawn = 1;
   }
   return can_spawn;
 }
-void create_sun(){
+void create_sun(float x_pos, float y_pos, int sunflower){
+  float sun_position_x = x_pos, sun_position_y = y_pos;
+  if(x_pos == 0 && y_pos == 0){
   srand(time(NULL));
-  float random_x = (float)((rand() % 8)+1) * 72.0;
-  float random_y = (float)((rand() % 4)+1)* 96.0;
-
+    sun_position_x = (float)((rand() % 8)+1) * 70.83581;
+    sun_position_y = (float)((rand() % 4)+1)* 94.96970;
+  }
   SUN sun = {
   .collected = 0,
-  .position.x = random_x,
-  .position.y = random_y,
-  .hitbox.x = random_x,
-  .hitbox.y = random_y,
+  .position.x = sun_position_x,
+  .position.y = sun_position_y,
+  .hitbox.x = sun_position_x,
+  .hitbox.y = sun_position_y,
   .hitbox.height = 30,
   .hitbox.width = 30,
+  .sunflower = sunflower,
   };
+  
 
   spawned_suns++;
   int i = 0;
   int found = 0;
-  while(found == 0 && i < 10){
+  while(found == 0 && i < MAX_SUNS){
     if(suns_spawned[i].collected == 1){ 
       suns_spawned[i] = sun;
       found = 1;
@@ -64,33 +67,34 @@ void create_sun(){
   }
 }
 
+
 void spawn_sun(int frames){
-  for(int i = 0; i < 10; i++){
-    if(suns_spawned[i].collected == 0){
-      sun_animated(frames, suns_spawned[i].position);
-    }
+  for(int i = 0; i < MAX_SUNS; i++){
+    if(suns_spawned[i].collected == 0)
+      animate_sun(frames, suns_spawned[i].position);
   }
 }
-void sun_animated(int frames, Vector2 pos){
+static void animate_sun(int frames, Vector2 pos){
   float currentFrame = 1;
   Rectangle frame = { 0, 0, currentFrame*framesWidth, framesHeight };
-  if(frames % (20) == 0)
+  if(frames % (60) == 0)
     frame.x = currentFrame*framesWidth;
   DrawTextureRec(sun_texture, frame, pos, WHITE);
   currentFrame = (currentFrame == 1) ? 2 : 1;
 }
+
 void collect_sun(){
   if(IsKeyPressed(KEY_S)){
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < MAX_SUNS; i++){
       if(suns_spawned[i].collected == 0){
         suns_spawned[i].collected = 1;
         points += 25;
         spawned_suns--;
       }
     }
-  } else if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
-    for(int i = 0; i < 10; i++){
-      if(suns_spawned[i].collected == 0 && CheckCollisionPointRec(GetMousePosition(), suns_spawned[i].hitbox)){
+  } if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+    for(int i = 0; i < MAX_SUNS; i++){
+      if(suns_spawned[i].collected == 0 && CheckCollisionPointRec(GetMousePosition(), suns_spawned[i].hitbox) && suns_spawned[i].sunflower == 0){
         suns_spawned[i].collected = 1;
         points += 25;
         spawned_suns--;

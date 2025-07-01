@@ -7,7 +7,9 @@ PEA peas[45];
 float frameWidth = 13;
 float frameHeight = 15;
 
-void shoot(PLANT peashooter_plant){ PEA new_pea = { .activated = 1,
+void shoot_pea(PLANT peashooter_plant){ 
+  PEA new_pea = { 
+    .activated = 1,
     .pos.x = peashooter_plant.position.x + 20,
     .pos.y = peashooter_plant.position.y - 25,
     .hitbox.height = 10,

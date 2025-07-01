@@ -11,7 +11,6 @@ int main() {
   Rectangle left_rect = { 10, 575, 500, 100 };
   SetTargetFPS(60);
   int frame_counter = 0;
-  start_plants();
 
   struct Grid game_grid;
   initialize_grid(&game_grid, 20, 60, 72, 96);
@@ -33,12 +32,12 @@ int main() {
     }
 
     if(can_sun_spawn(frame_counter)){
-      create_sun();
+      create_sun(0,0,0); // parametros {0,0} -> sois em lugares aleatórios
      printf("%d\n", frame_counter);
     }
     //UPDATE POSITION
     update_pea(frame_counter);
-    update_plant(frame_counter);
+    update_plant();
     
     BeginDrawing();
     ClearBackground(SKYBLUE); 
