@@ -10,6 +10,7 @@
 typedef struct{
   int theres_plant;
   Rectangle tile;
+  Texture2D block_texture;
 }Block;
 
 struct Grid{
@@ -19,7 +20,7 @@ struct Grid{
 
 
 void initialize_grid(struct Grid *grid, float x, float y, float width, float height);
-void draw_grid(struct Grid *grid);
+void draw_grid();
 void draw_outlined_selected_grid(struct Grid *grid);
 void manage_selected_grid(struct Grid *grid);
 

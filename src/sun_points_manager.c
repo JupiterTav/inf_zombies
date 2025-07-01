@@ -103,10 +103,10 @@ void collect_sun(){
   }
 }
 void points_menu(){
-  DrawTextureEx(sun_menu_texture, (Vector2){30, 585}, 0, 0.25, WHITE);
-  Rectangle points_back = { 25, 645, 80, 25};
+  DrawTextureEx(sun_menu_texture, (Vector2){30, 5}, 0, 0.25, WHITE);
+  Rectangle points_back = { 25, 65, 80, 25};
   DrawRectangleRounded(points_back, 0.2, 1, (Color){245, 233, 120, 255});
-  DrawText(TextFormat("%d", points), 54, 652, 15, BLACK);
+  DrawText(TextFormat("%d", points), 54, 70, 15, BLACK);
 }
 void decrease_points(int point){
   points -= point;

@@ -2,7 +2,7 @@
 #define SUN_POINTS_MANAGER_H
 #include "raylib.h"
 
-#define SPAWNTIME 8
+#define SPAWNTIME 4
 #define POINTS 25
 #define FRAMES_PER_LINE 2
 #define LINES 1

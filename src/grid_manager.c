@@ -6,29 +6,26 @@
 #define GRID_COLUMS 9
 #define GRID_LINES 5
 
+
+Texture2D grid_texture;
 void initialize_grid(struct Grid *grid, float x, float y, float width, float height){
-    for(int i = 0; i < GRID_LINES; i++) {
+  grid_texture = LoadTexture("assets/sprites/grid.png");
+  for(int i = 0; i < GRID_LINES; i++) {
       for(int j = 0; j < GRID_COLUMS; j++){
         grid->map[i][j].tile.x = x + (width * j);
         grid->map[i][j].tile.y = y + (height*i);
         grid->map[i][j].tile.width  = width ;
         grid->map[i][j].tile.height = height;
         grid->map[i][j].theres_plant = 0;
+      //  grid->map[i][j].block_texture = ((j+i) % 2 == 0) ? LoadTexture("assets/sprites/grass.png") : LoadTexture("assets/sprites/grass_other.png");
       }
     }
 
     grid->selected_block = &grid->map[0][0];
 }
 
-void draw_grid(struct Grid *grid) {
-  Color slice_color = GREEN;
-  for(int i = 0; i < GRID_LINES; i++){
-    for(int j = 0; j < GRID_COLUMS; j++){
-      slice_color = ColorIsEqual(slice_color, GREEN) == 1 ? BROWN : GREEN;
-      DrawRectangle( grid->map[i][j].tile.x, grid->map[i][j].tile.y,
-          grid->map[i][j].tile.width, grid->map[i][j].tile.height, slice_color);
-    }
-  }
+void draw_grid() {
+  DrawTexturePro(grid_texture, (Rectangle){0, 0, 246, 169}, (Rectangle){48, 143, 648, 480}, (Vector2){0, 0}, 0, WHITE); //textura, source, posicao, posicao relativa ao source
 }
 
 void manage_selected_grid(struct Grid *grid){
