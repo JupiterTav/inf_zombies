@@ -17,7 +17,6 @@ void initialize_grid(struct Grid *grid, float x, float y, float width, float hei
         grid->map[i][j].tile.width  = width ;
         grid->map[i][j].tile.height = height;
         grid->map[i][j].theres_plant = 0;
-      //  grid->map[i][j].block_texture = ((j+i) % 2 == 0) ? LoadTexture("assets/sprites/grass.png") : LoadTexture("assets/sprites/grass_other.png");
       }
     }
 
@@ -25,7 +24,7 @@ void initialize_grid(struct Grid *grid, float x, float y, float width, float hei
 }
 
 void draw_grid() {
-  DrawTexturePro(grid_texture, (Rectangle){0, 0, 246, 169}, (Rectangle){48, 143, 648, 480}, (Vector2){0, 0}, 0, WHITE); //textura, source, posicao, posicao relativa ao source
+  DrawTexturePro(grid_texture, (Rectangle){0, 0, 246, 169}, (Rectangle){50, 143, 648, 480}, (Vector2){0, 0}, 0, WHITE); //textura, source, posicao, posicao relativa ao source
 }
 
 void manage_selected_grid(struct Grid *grid){
@@ -56,5 +55,5 @@ void manage_selected_grid(struct Grid *grid){
 }
 
 void draw_outlined_selected_grid(struct Grid *grid){
-  DrawRectangleLinesEx((grid->selected_block->tile), 4, BLACK);
+  DrawRectangleLinesEx((grid->selected_block->tile), 3, BLACK);
 }

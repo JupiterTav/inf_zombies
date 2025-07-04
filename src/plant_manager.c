@@ -4,6 +4,7 @@
 #include "peashooter.h"
 #include "sun_points_manager.h"
 #include "raylib.h"
+#include "zombie_manager.h"
 #include <stdio.h>
 #define MAX_PLANTS GRID_COLUMS*GRID_LINES
 #define OFFSET_X 30
@@ -15,90 +16,96 @@ static void set_textures(PLANT *plant);
 static void render_plant(PLANT *plant);
 
 static void plant_anim(PLANT *plant, int anim_frames, int anim_speed, int frame_width, int frame_height);
-static void handle_sunflower(int i);
-static void handle_peashooter(int i);
+static void handle_sunflower(PLANT *plant);
+static void handle_peashooter(PLANT*plant);
 
 void make_plant(Block *selected_block, PLANT_TYPE plant_type){
   int x_pos = selected_block->tile.x + OFFSET_X;
   int y_pos = selected_block->tile.y + OFFSET_Y;
   selected_block->theres_plant = 1;
   PLANT new_plant = {
-  .block = selected_block,
-  .f_alive = 1,
-  .position = {x_pos, y_pos},
-  .type = plant_type,
-  .hitbox = {x_pos - 10, y_pos - 20, 50, 60},
-  .state = IDLE, // 0 = IDLE
-  .currentFrame =1,
-  .local_frame_counter = 0,
-};
+    .block = selected_block,
+    .f_alive = 1,
+    .position = {x_pos, y_pos},
+    .type = plant_type,
+    .hitbox = {x_pos - 10, y_pos - 20, 50, 60},
+    .state = IDLE, 
+    .currentFrame = 1,
+    .local_frame_counter = 1,
+  };
 
   set_textures(&new_plant);
-  int i = 0;
-  while(plants[i].f_alive == 1)
-    i++;
-  plants[i] = new_plant;
-}
-
-void on_collision(){
+  
   for(int i = 0; i < MAX_PLANTS; i++){
-    if(CheckCollisionPointRec(GetMousePosition(), plants[i].hitbox)){
-      plants[i].f_alive = 0;
-      plants[i].block->theres_plant = 0;
+    if(plants[i].f_alive == 0){
+      plants[i] = new_plant;
+      break;
     }
   }
 }
+
+
 
 void update_plant(){
   for(int i = 0; i < MAX_PLANTS; i++){
     if(plants[i].f_alive == 1){
       switch (plants[i].type) {
         case PEATER:
-          handle_peashooter(i);
+          handle_peashooter(&plants[i]);
                   break;
         case SUNFLOWER:
-          handle_sunflower(i);
+          handle_sunflower(&plants[i]);
         break;
       }
       plants[i].local_frame_counter++;
+
+      for(int j = 0; j < MAX_ZOMBIES; j++){
+        if(CheckCollisionRecs(plants[i].hitbox, get_zombie(j)->hitbox)) 
+          on_collision(&plants[i]);
+      }
+
     }
   }
 }
 
+void on_collision(PLANT *plant){
+  plant->f_alive = 0;
+  plant->block->theres_plant = 0;  
+}
 void render_plants(){
   for(int i = 0; i < MAX_PLANTS; i++){
     render_plant(&plants[i]);
   }
 }
 
-static void handle_sunflower(int i){
-  plant_anim(&plants[i], 6, 15, 28, 30);
-  if(plants[i].state == IDLE){
-    if(plants[i].local_frame_counter % (COOLDOWN*60) == 0){
-      create_sun(plants[i].position.x, plants[i].position.y+30, 1); 
-      plants[i].state = SHOOTING;
+static void handle_sunflower(PLANT *plant){
+  plant_anim(plant, 6, 12, 28, 30);
+  if(plant->state == IDLE){
+    if(plant->local_frame_counter % (COOLDOWN*60) == 0){
+      create_sun(plant->position.x, plants->position.y+30, 1); 
+      plant->state = SHOOTING;
     }
   } 
-  else if(plants[i].state == SHOOTING){
+  else if(plants->state == SHOOTING){
     if(IsKeyPressed(KEY_S)){
-      plants[i].state = IDLE;
-      plants[i].local_frame_counter = 0;
+      plants->state = IDLE;
+      plants->local_frame_counter = 0;
     }
   }
 }
 
-static void handle_peashooter(int i){
-  if(plants[i].state == IDLE){
-    if(plants[i].local_frame_counter % (COOLDOWN*60) == 0){
-      shoot_pea(plants[i]);
-      plants[i].state = SHOOTING;
+static void handle_peashooter(PLANT *plant){
+  if(plant->state == IDLE){
+    if(plant->local_frame_counter % (COOLDOWN*60) == 0){
+      shoot_pea(*plant);
+      plant->state = SHOOTING;
     } else{ 
-      plant_anim(&plants[i], 8, 16, 28, 30);
+      plant_anim(plant, 8, 12, 28, 30);
     }
-  } else if (plants[i].state == SHOOTING){
-      plant_anim(&plants[i], 3, 10, 28, 30);   
-      if(plants[i].local_frame_counter % 24 == 0)
-        plants[i].state = IDLE;
+  } else if (plant->state == SHOOTING){
+      plant_anim(plant, 3, 10, 28, 30);   
+      if(plants->local_frame_counter % 12 == 0)
+        plants->state = IDLE;
     }
 }
 
@@ -108,7 +115,7 @@ static void plant_anim(PLANT *plant, int anim_frames, int anim_speed, int frame_
     if(plant->currentFrame >= anim_frames)
       plant->currentFrame = 0;
     plant->frame.x = frame_width*plant->currentFrame;
-    plant->frame.y = frame_height;
+    plant->frame.y = 0;
     plant->frame.width = frame_width;
     plant->frame.height = frame_height;
   }

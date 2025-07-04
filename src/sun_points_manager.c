@@ -16,15 +16,11 @@ Texture2D sun_menu_texture;
 static int points = 0;
 int Points;
 void start_sun_points(){
-  if(IsTextureValid(LoadTexture("assets/sprites/sun.png"))){
-    sun_texture = LoadTexture("assets/sprites/sun.png");
-    framesWidth = (float)(sun_texture.width/FRAMES_PER_LINE);
-    framesHeight = (float)(sun_texture.height/LINES);
-  }
+  sun_texture = LoadTexture("assets/sprites/sun.png");
+  framesWidth = (float)(sun_texture.width/FRAMES_PER_LINE);
+  framesHeight = (float)(sun_texture.height/LINES);
 
-  if(IsTextureValid(LoadTexture("assets/sprites/sun_menu.png"))){
-    sun_menu_texture = LoadTexture("assets/sprites/sun_menu.png");
-  }
+  sun_menu_texture = LoadTexture("assets/sprites/sun_menu.png");
   for(int i = 0; i < MAX_SUNS; i++){
       suns_spawned[i].collected = 1;
   }
@@ -41,8 +37,9 @@ void create_sun(float x_pos, float y_pos, int sunflower){
   if(x_pos == 0 && y_pos == 0){
   srand(time(NULL));
     sun_position_x = (float)((rand() % 8)+1) * 70.83581;
-    sun_position_y = (float)((rand() % 4)+1)* 94.96970;
+    sun_position_y = GetRandomValue(140, 480);
   }
+
   SUN sun = {
   .collected = 0,
   .position.x = sun_position_x,
@@ -55,16 +52,10 @@ void create_sun(float x_pos, float y_pos, int sunflower){
   };
   
 
-  spawned_suns++;
   int i = 0;
-  int found = 0;
-  while(found == 0 && i < MAX_SUNS){
-    if(suns_spawned[i].collected == 1){ 
-      suns_spawned[i] = sun;
-      found = 1;
-    } 
+  while(suns_spawned[i].collected != 1)
     i++;
-  }
+  suns_spawned[i] = sun;
 }
 
 

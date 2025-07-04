@@ -1,6 +1,0 @@
-#ifndef SUNFLOWER_PLANT_H
-#define SUNFLOWER_PLANT_H
-
-
-
-#endif // SUNFLOWER_PLANT_H

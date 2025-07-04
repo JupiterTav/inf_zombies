@@ -29,7 +29,7 @@ typedef struct{
 }PLANT;
 
 void make_plant(Block *block_selected, PLANT_TYPE plant_type);
-void on_collision();
+void on_collision(PLANT *plant);
 void update_plant();
 void render_plants(); // Renderiza todas as plantas de um array atráves de uma funçao interna que renderiza uma a uma
 #endif

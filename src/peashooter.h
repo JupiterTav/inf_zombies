@@ -3,7 +3,7 @@
 
 #include "plant_manager.h"
 #include <raylib.h>
-#define Damage 25
+#define PEA_DAMAGE 25
 #define PEA_SPEED 170
 #define COOLDOWN 4
 
@@ -21,5 +21,6 @@ void shoot_pea(PLANT peashooter_plant);
 void update_pea(int frames);
 
 void render_peas();
+PEA* get_pea(int i);
 
 #endif
