@@ -1,6 +1,6 @@
-#include "horde_manager.h"
+#include "include/horde_manager.h"
 #include "stdio.h"
-#include "zombie_manager.h"
+#include "include/zombie_manager.h"
 
 int horde_zombies[3];
 int enemies_to_spawn;

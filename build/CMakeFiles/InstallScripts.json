@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/wes_tav/inf_zombies/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

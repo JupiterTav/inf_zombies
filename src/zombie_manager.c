@@ -1,9 +1,9 @@
-#include "peashooter.h"
+#include "include/peashooter.h"
 #include "raylib.h"
 #include "time.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "zombie_manager.h"
+#include "include/zombie_manager.h"
 
 static void zombie_anim(ZOMBIE *zombie);
 ZOMBIE zombies[MAX_ZOMBIES];

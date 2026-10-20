@@ -1,4 +1,4 @@
-#include "grid_manager.h"
+#include "include/grid_manager.h"
 
 #include <raylib.h>
 #include <raymath.h>

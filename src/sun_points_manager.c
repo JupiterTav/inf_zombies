@@ -1,4 +1,4 @@
-#include "sun_points_manager.h"
+#include "include/sun_points_manager.h"
 #include "raylib.h"
 #include "stdlib.h"
 #include "time.h"

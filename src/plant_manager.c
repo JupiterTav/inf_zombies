@@ -1,10 +1,10 @@
-#include "plant_manager.h"
-#include "grid_manager.h"
+#include "include/plant_manager.h"
+#include "include/grid_manager.h"
 
-#include "peashooter.h"
-#include "sun_points_manager.h"
+#include "include/peashooter.h"
+#include "include/sun_points_manager.h"
 #include "raylib.h"
-#include "zombie_manager.h"
+#include "include/zombie_manager.h"
 #include <stdio.h>
 #define MAX_PLANTS GRID_COLUMS*GRID_LINES
 #define OFFSET_X 30

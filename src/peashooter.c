@@ -1,5 +1,5 @@
-#include "peashooter.h"
-#include "plant_manager.h"
+#include "include/peashooter.h"
+#include "include/plant_manager.h"
 #include "raylib.h"
 #include <stdio.h>
 

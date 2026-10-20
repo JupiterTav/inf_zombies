@@ -1,12 +1,13 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <stdio.h>
-#include "grid_manager.h"
-#include "horde_manager.h"
-#include "peashooter.h"
-#include "plant_manager.h"
-#include "sun_points_manager.h"
-#include "zombie_manager.h"
+
+#include "include/grid_manager.h"
+#include "include/horde_manager.h"
+#include "include/peashooter.h"
+#include "include/plant_manager.h"
+#include "include/sun_points_manager.h"
+#include "include/zombie_manager.h"
 
 #define UP_MARGIN 140
 #define LEFT_MARGIN 50
@@ -68,7 +69,7 @@ int main() {
       } 
       else {
         active_peashooter_portraid = 0;
-        active_sunflower_portraid = 0;
+            active_sunflower_portraid = 0;
       }
 
       collect_sun();
