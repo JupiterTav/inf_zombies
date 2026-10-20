@@ -2,9 +2,11 @@ Aluno: Wesley Tavares da Silva
 
 Trabalho da cadeira de algoritmos e programação para aplicação dos conceitos estudados ao longo do semestre;
 
+![](assets/banner.png)
+
 ## executavel: 
 ### nix: 
-./results/bin/inf_zombies
+    ./results/bin/inf_zombies
 
 ### cmake: 
     cmake -S . -B build/ (uma vez)        
